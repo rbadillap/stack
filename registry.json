@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "stackcn",
+  "homepage": "https://stackcn.vercel.app",
+  "items": [
+    {
+      "name": "header",
+      "type": "registry:component",
+      "description": "The header component for the home page",
+      "title": "Header",
+      "categories": ["header", "home", "components", "stackcn"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "src/components/home/header.tsx"
+        }
+      ]
+    }
+  ]
+}
