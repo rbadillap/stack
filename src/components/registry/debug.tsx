@@ -1,17 +1,78 @@
+"use client"
+
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-interface DebugWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+interface DebugProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   enabled?: boolean
 }
 
-const DebugWrapper = React.forwardRef<HTMLDivElement, DebugWrapperProps>(
+interface DebugContextValue {
+  enabled: boolean
+}
+
+const DebugContext = React.createContext<DebugContextValue | undefined>(undefined)
+
+function useDebug() {
+  const context = React.useContext(DebugContext)
+  if (!context) {
+    throw new Error("Debug components must be used within a Debug provider")
+  }
+  return context
+}
+
+const Debug = React.forwardRef<HTMLDivElement, DebugProps>(
   ({ children, enabled = true, className, ...props }, ref) => {
     if (!enabled) return <>{children}</>
 
     return (
-      <div ref={ref} className={cn("relative", className)} {...props}>
+      <DebugContext.Provider value={{ enabled }}>
+        <div ref={ref} className={cn("flex flex-col gap-4", className)} {...props}>
+          {children}
+        </div>
+      </DebugContext.Provider>
+    )
+  }
+)
+Debug.displayName = "Debug"
+
+interface DebugToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: React.ReactNode
+}
+
+const DebugToolbar = React.forwardRef<HTMLDivElement, DebugToolbarProps>(
+  ({ children, className, ...props }, ref) => {
+    const { enabled } = useDebug()
+    if (!enabled) return null
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "flex items-center gap-4 rounded-lg border border-border bg-card p-4",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    )
+  }
+)
+DebugToolbar.displayName = "DebugToolbar"
+
+interface DebugContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+}
+
+const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
+  ({ children, className, ...props }, ref) => {
+    const { enabled } = useDebug()
+    if (!enabled) return <>{children}</>
+
+    return (
+      <div ref={ref} className={cn("space-y-4", className)} {...props}>
         {React.Children.map(children, (child) => {
           if (!React.isValidElement(child)) return child
 
@@ -26,12 +87,14 @@ const DebugWrapper = React.forwardRef<HTMLDivElement, DebugWrapperProps>(
           }
 
           return (
-            <div className="group relative my-1">
-              <div className="absolute inset-0 rounded-lg border border-zinc-200 transition-all duration-300 ease-out group-hover:border-zinc-400 group-hover:bg-zinc-50/50 dark:border-zinc-800 dark:group-hover:border-zinc-700 dark:group-hover:bg-zinc-900/50" />
-              <span className="absolute left-2 top-2 z-10 text-xs text-zinc-500 transition-colors group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-zinc-300">
-                {componentName}
-              </span>
-              <div className="relative p-2">
+            <div className="group relative my-1 overflow-hidden">
+              <div className="absolute inset-0 rounded-lg border border-border transition-all duration-300 ease-out group-hover:border-border/60 group-hover:bg-muted/50" />
+              <div className="absolute left-2 top-2 z-[1] rounded-sm bg-background/80 px-1.5 py-0.5">
+                <span className="text-xs text-muted-foreground transition-colors group-hover:text-foreground">
+                  {componentName}
+                </span>
+              </div>
+              <div className="relative z-0 p-2">
                 {child}
               </div>
             </div>
@@ -41,7 +104,6 @@ const DebugWrapper = React.forwardRef<HTMLDivElement, DebugWrapperProps>(
     )
   }
 )
+DebugContent.displayName = "DebugContent"
 
-DebugWrapper.displayName = "DebugWrapper"
-
-export { DebugWrapper }
+export { Debug, DebugToolbar, DebugContent }

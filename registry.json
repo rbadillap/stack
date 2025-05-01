@@ -16,6 +16,50 @@
           "path": "src/components/home/header.tsx"
         }
       ]
+    },
+    {
+      "name": "main",
+      "type": "registry:component",
+      "description": "The main component for the home page",
+      "title": "Main",
+      "categories": ["main", "home", "components", "stackcn"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "src/components/home/main.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "src/components/home/hero.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "src/components/home/features.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "src/components/home/showcase.tsx"
+        },
+        {
+          "type": "registry:component",
+          "path": "src/components/home/cta.tsx"
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "type": "registry:component",
+      "description": "The footer component for the home page",
+      "title": "Footer",
+      "categories": ["footer", "home", "components", "stackcn"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "src/components/home/footer.tsx"
+        }
+      ]
     }
   ]
 }
