@@ -1,4 +1,4 @@
-import { Debug, DebugToolbar, DebugContent } from "@/components/registry/debug"
+import { Debug, DebugToolbar, DebugContent, DebugBreadcrumb } from "@/components/registry/debug"
 import { Header } from "@/components/home/header"
 import { Hero } from "@/components/home/hero"
 import { Features } from "@/components/home/features"
@@ -13,6 +13,7 @@ export default function Registry() {
       <div className="flex flex-col gap-8 py-8">
         <Debug>
           <DebugToolbar>
+            <DebugBreadcrumb />
           </DebugToolbar>
           <DebugContent>
             <Header />

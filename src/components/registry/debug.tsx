@@ -6,6 +6,14 @@ import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Terminal } from "lucide-react"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 interface DebugProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -208,4 +216,34 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
 )
 DebugContent.displayName = "DebugContent"
 
-export { Debug, DebugToolbar, DebugContent }
+const DebugBreadcrumb = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const routes = [
+      { path: "/", label: "/" },
+      { path: "/app", label: "app" },
+      { path: "/components", label: "components" },
+    ]
+
+    return (
+      <Breadcrumb ref={ref} className={cn("w-full", className)} {...props}>
+        <BreadcrumbList>
+          {routes.map((route, index) => (
+            <React.Fragment key={route.path}>
+              <BreadcrumbItem>
+                {index === routes.length - 1 ? (
+                  <BreadcrumbPage>{route.label}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink href={route.path}>{route.label}</BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+              {index < routes.length - 1 && <BreadcrumbSeparator />}
+            </React.Fragment>
+          ))}
+        </BreadcrumbList>
+      </Breadcrumb>
+    )
+  }
+)
+DebugBreadcrumb.displayName = "DebugBreadcrumb"
+
+export { Debug, DebugToolbar, DebugContent, DebugBreadcrumb }
