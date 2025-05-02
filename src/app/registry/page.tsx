@@ -11,14 +11,8 @@ export default function Registry() {
   return (
     <div className="container relative mx-auto">
       <div className="flex flex-col gap-8 py-8">
-        <h1 className="text-3xl font-bold">Debug View</h1>
-        <p className="text-muted-foreground">
-          This page shows all home components with debug borders to visualize their structure.
-        </p>
-
         <Debug>
           <DebugToolbar>
-            {/* Toolbar content will be added later */}
           </DebugToolbar>
           <DebugContent>
             <Header />

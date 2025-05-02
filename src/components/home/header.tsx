@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Header = ({ ...props }: React.ComponentProps<"header">) => {
   return (
@@ -32,11 +33,7 @@ export const Header = ({ ...props }: React.ComponentProps<"header">) => {
         {/* Actions */}
         <div className="flex items-center gap-4">
           {/* Theme Toggle */}
-          <button className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-primary/5 transition-colors">
-            <div className="w-4 h-4 rounded-full border-2 border-primary/30 relative">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary/30 rounded-full" />
-            </div>
-          </button>
+          <ThemeToggle />
 
           {/* CTA Buttons */}
           <div className="hidden sm:flex items-center gap-3">

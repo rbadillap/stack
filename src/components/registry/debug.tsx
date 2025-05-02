@@ -2,9 +2,10 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { Separator } from "../ui/separator"
-import { Button } from "../ui/button"
-import { TerminalIcon } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Terminal } from "lucide-react"
 
 interface DebugProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -13,6 +14,10 @@ interface DebugProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface DebugContextValue {
   enabled: boolean
+  showAlert: boolean
+  alertMessage: string
+  setShowAlert: (show: boolean) => void
+  setAlertMessage: (message: string) => void
 }
 
 const DebugContext = React.createContext<DebugContextValue | undefined>(undefined)
@@ -27,11 +32,23 @@ function useDebug() {
 
 const Debug = React.forwardRef<HTMLDivElement, DebugProps>(
   ({ children, enabled = true, className, ...props }, ref) => {
+    const [showAlert, setShowAlert] = React.useState(false)
+    const [alertMessage, setAlertMessage] = React.useState("")
+
     if (!enabled) return <>{children}</>
 
     return (
-      <DebugContext.Provider value={{ enabled }}>
+      <DebugContext.Provider value={{ enabled, showAlert, alertMessage, setShowAlert, setAlertMessage }}>
         <div ref={ref} className={cn("flex flex-col gap-4", className)} {...props}>
+          {showAlert && (
+            <Alert className="fixed top-4 right-4 z-50 w-fit">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Command copied to clipboard!</AlertTitle>
+              <AlertDescription>
+                {alertMessage}
+              </AlertDescription>
+            </Alert>
+          )}
           {children}
         </div>
       </DebugContext.Provider>
@@ -71,7 +88,7 @@ interface DebugContentProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
   ({ children, className, ...props }, ref) => {
-    const { enabled } = useDebug()
+    const { enabled, setShowAlert, setAlertMessage } = useDebug()
     if (!enabled) return <>{children}</>
 
     return (
@@ -103,7 +120,10 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
                     size="sm"
                     className="text-xs p-1.5 rounded-sm border border-border text-muted-foreground hover:bg-muted bg-muted-foreground/5"
                     onClick={() => {
-                      console.log(`pnpm dlx shadcn add https://stackcn.vercel.app/${componentName}.tsx`)
+                      const command = `pnpm dlx shadcn add ${componentName}.tsx`
+                      setAlertMessage(command)
+                      setShowAlert(true)
+                      setTimeout(() => setShowAlert(false), 3000)
                     }}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
@@ -140,7 +160,11 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
                     size="sm"
                     className="text-xs p-1.5 rounded-sm border border-border text-muted-foreground bg-accent hover:bg-muted-foreground/5"
                     onClick={() => {
-                      console.log(`pnpm dlx shadcn add https://stackcn.vercel.app/components/${componentName}.tsx`)
+                      const url = `https://stackcn.vercel.app/components/${componentName}.tsx`
+                      console.log(url)
+                      setAlertMessage(`Opening component in StackCN: ${componentName}`)
+                      setShowAlert(true)
+                      setTimeout(() => setShowAlert(false), 3000)
                     }}
                   >
                     <a
