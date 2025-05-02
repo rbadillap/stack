@@ -128,7 +128,7 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
                     size="sm"
                     className="text-xs p-1.5 rounded-sm border border-border text-muted-foreground hover:bg-muted bg-muted-foreground/5"
                     onClick={() => {
-                      const command = `pnpm dlx shadcn add ${componentName}.tsx`
+                      const command = `pnpm dlx shadcn add https://stackcn.vercel.app/components/${componentName}.tsx`
                       setAlertMessage(command)
                       setShowAlert(true)
                       setTimeout(() => setShowAlert(false), 3000)
@@ -167,16 +167,9 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
                     variant="outline"
                     size="sm"
                     className="text-xs p-1.5 rounded-sm border border-border text-muted-foreground bg-accent hover:bg-muted-foreground/5"
-                    onClick={() => {
-                      const url = `https://stackcn.vercel.app/components/${componentName}.tsx`
-                      console.log(url)
-                      setAlertMessage(`Opening component in StackCN: ${componentName}`)
-                      setShowAlert(true)
-                      setTimeout(() => setShowAlert(false), 3000)
-                    }}
                   >
                     <a
-                      href={`#`}
+                      href={`https://v0.dev/chat/api/open?url=https://stackcn.vercel.app/r/${componentName}.json`}
                       target="_blank"
                       rel="noreferrer"
                     >

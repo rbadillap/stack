@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "header",
+  "type": "registry:component",
+  "title": "Header",
+  "description": "The header component for the home page",
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "src/components/home/header.tsx",
+      "content": "import { Button } from \"@/components/ui/button\";\nimport { ThemeToggle } from \"@/components/theme-toggle\";\n\nexport const Header = ({ ...props }: React.ComponentProps<\"header\">) => {\n  return (\n    <header\n      {...props}\n    >\n      <div className=\"container mx-auto px-4\">\n      <div className=\"flex h-16 items-center justify-between\">\n        {/* Logo */}\n        <div className=\"flex items-center gap-2\">\n          <div className=\"w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group\">\n            <div className=\"w-4 h-4 rotate-45 bg-primary/20 group-hover:rotate-90 transition-transform duration-500\" />\n          </div>\n          <span className=\"text-lg font-semibold\">Geometric</span>\n        </div>\n\n        {/* Desktop Navigation */}\n        <nav className=\"hidden md:flex items-center gap-8\">\n          {[\"Features\", \"Products\", \"Resources\", \"Pricing\"].map((item, index) => (\n            <a\n              key={index}\n              href=\"#\"\n              className=\"text-sm text-muted-foreground hover:text-foreground transition-colors relative group py-1\"\n            >\n              {item}\n              <span className=\"absolute bottom-0 left-0 w-0 h-[1px] bg-primary/30 group-hover:w-full transition-all duration-300\" />\n            </a>\n          ))}\n        </nav>\n\n        {/* Actions */}\n        <div className=\"flex items-center gap-4\">\n          {/* Theme Toggle */}\n          <ThemeToggle />\n\n          {/* CTA Buttons */}\n          <div className=\"hidden sm:flex items-center gap-3\">\n            <Button variant=\"ghost\" size=\"sm\" className=\"rounded-full\">\n              Sign in\n            </Button>\n            <Button size=\"sm\" className=\"rounded-full\">\n              Get Started\n            </Button>\n          </div>\n\n          {/* Mobile Menu Button */}\n          <button className=\"md:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 group\">\n            <div className=\"w-5 h-[2px] bg-primary/70 group-hover:w-6 transition-all\" />\n            <div className=\"w-6 h-[2px] bg-primary/70\" />\n            <div className=\"w-5 h-[2px] bg-primary/70 group-hover:w-6 transition-all self-end group-hover:self-start\" />\n          </button>\n        </div>\n      </div>\n      </div>\n\n      {/* Mobile Navigation - Hidden by default */}\n      <div className=\"md:hidden hidden\">\n      <nav className=\"container mx-auto px-4 py-4 space-y-4\">\n        {[\"Features\", \"Products\", \"Resources\", \"Pricing\"].map((item, index) => (\n          <a\n            key={index}\n            href=\"#\"\n            className=\"block text-muted-foreground hover:text-foreground transition-colors py-2\"\n          >\n            {item}\n          </a>\n        ))}\n        <div className=\"pt-4 border-t border-primary/5 flex flex-col gap-3\">\n          <Button variant=\"ghost\" className=\"rounded-full w-full\">\n            Sign in\n          </Button>\n          <Button className=\"rounded-full w-full\">\n            Get Started\n          </Button>\n        </div>\n      </nav>\n      </div>\n    </header>\n  );\n};\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "header",
+    "home",
+    "components",
+    "stackcn"
+  ]
+}
