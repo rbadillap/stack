@@ -92,13 +92,11 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
           return (
             <div className="group rounded-lg border border-border relative overflow-hidden">
               <div className="bg-muted px-3 py-1.5 border-b border-border flex items-center justify-between">
-                {/* left */}
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-mono text-muted-foreground transition-colors group-hover:text-foreground">
                     &lt;{componentName} /&gt;
                   </span>
                 </div>
-                {/* right */}
                 <div className="flex items-center gap-1.5">
                 <Button 
                     variant="outline"
@@ -133,7 +131,7 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
                         strokeWidth="32"
                       ></line>
                     </svg>
-                    <pre>pnpm dlx shadcn add {componentName}</pre>
+                    <pre>pnpm dlx shadcn add {componentName}.tsx</pre>
                   </Button>
                   <Separator orientation="vertical" className="!h-4 border-border" />
                   <Button
@@ -142,7 +140,7 @@ const DebugContent = React.forwardRef<HTMLDivElement, DebugContentProps>(
                     size="sm"
                     className="text-xs p-1.5 rounded-sm border border-border text-muted-foreground bg-accent hover:bg-muted-foreground/5"
                     onClick={() => {
-                      console.log(`pnpm dlx shadcn add https://stackcn.vercel.app/${componentName}.tsx`)
+                      console.log(`pnpm dlx shadcn add https://stackcn.vercel.app/components/${componentName}.tsx`)
                     }}
                   >
                     <a
